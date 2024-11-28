@@ -4,6 +4,10 @@ const express = require("express");
 // Importing the connectDB function from the db configuration file
 const connectDB = require('./config/db');
 
+// Importing dotenv and configuring it to load environment variables from the .env file
+require('dotenv').config();
+
+
 // Calling the connectDB function to establish a connection to the MongoDB database
 connectDB();
 
