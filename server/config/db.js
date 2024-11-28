@@ -13,3 +13,5 @@ const connectDB = async () => {
         console.log(error);
     }
 };
+
+module.exports = connectDB; // export the connectDB async function to import on index.js file 
