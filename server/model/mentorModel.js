@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require ("mongoose");
 
 // Define the schema for the Mentor model
 const mentorSchema = new mongoose.Schema(
