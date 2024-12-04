@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-
+const v1Router = require('express').Router();
 // Import individual route files
+const productRouter = require('./productRouter');
 const userRoutes = require('./userRoutes');
 
-router.use('/users', userRoutes);
+v1Router.use('/user', userRoutes);
+v1Router.use('/product', productRouter);
 
-module.exports = router;
+module.exports = v1Router;

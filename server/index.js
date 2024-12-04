@@ -3,6 +3,7 @@ const express = require("express");
 
 // Importing the connectDB function from the db configuration file
 const connectDB = require("./config/db");
+const apiRoutes = require("./routes");
 
 // Importing dotenv and configuring it to load environment variables from the .env file
 require("dotenv").config();
@@ -17,6 +18,8 @@ require("dotenv").config();
 
 // Getting the PORT value from the environment variables
 const port = process.env.PORT;
+
+app.use("/api", apiRoutes)
 
 // Starting the server on the specified port and handling errors
 app.listen(port, (err) => {
