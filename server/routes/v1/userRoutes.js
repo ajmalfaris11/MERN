@@ -1,8 +1,8 @@
+const { register } = require("../../controllers/userControllers");
+
 const userRoutes = require ("express").Router();
 
-userRoutes.get("/profile", (req, res) => {
-    res.json("working")
-});
+userRoutes.post("/signup", register); 
 
 
 module.exports = userRoutes

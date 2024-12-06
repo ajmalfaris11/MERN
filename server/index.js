@@ -19,7 +19,8 @@ require("dotenv").config();
 // Getting the PORT value from the environment variables
 const port = process.env.PORT;
 
-app.use("/api", apiRoutes)
+app.use(express.json());
+app.use("/api", apiRoutes);
 
 // Starting the server on the specified port and handling errors
 app.listen(port, (err) => {
