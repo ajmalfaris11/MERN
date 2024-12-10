@@ -1,41 +1,44 @@
 const userModel = require("../model/userModel");
+const bcrypt = require('bcrypt');
 
-const register = async(req, res) => {
-    try {
+const register = async (req, res) => {
+  try {
+    const { name, email, mobile, password } = req.body;
 
-        const { name, email, mobile, password } = req.body;
+    console.log(password);
 
-
-        if(!name || !email || !mobile || !password) {
-            return res.status(400).json({error: "All fields are required"});
-        } 
-
-        const userAleardyExist = userModel.find({email});
-
-        if(!userAleardyExist){
-            const newUser = new userModel({
-                name, email, mobile, password
-            });
-    
-            const savedUser = await newUser.save();
-    
-            console.log(savedUser);
-            
-    
-            res.status(200).json({
-                message:"User created successfully", savedUser
-            })
-        } else {
-            return res.status(400).json({
-                message: "User already exist"
-            });
-        }
-        
-        
-    } catch (error) {
-        console.log("register contoller issue")
-        res.status(error.status || 500).json({err:error.message || "Internal server Error"})
+    if (!name || !email || !mobile || !password) {
+      return res.status(400).json({ error: "All fields are required" });
     }
-}
 
-module.exports = {register}
+    const userAlreadyExist = await userModel.findOne({
+        $or: [{ email }, { mobile }] // Check if either email or mobile exists
+      });
+    if (userAlreadyExist) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new userModel({
+      name,
+      email,
+      mobile,
+      password: hashedPassword,
+    });
+
+    const savedUser = await newUser.save();
+    console.log(savedUser);
+
+    return res.status(200).json({
+      message: "User created successfully",
+      savedUser,
+    });
+  } catch (error) {
+    console.log("Register controller issue:", error.message);
+    res.status(error.status || 500).json({ err: error.message || "Internal Server Error" });
+  }
+};
+
+module.exports = { register };

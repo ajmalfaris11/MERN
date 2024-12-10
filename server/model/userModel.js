@@ -38,4 +38,4 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true }); // Adding timestamps to the schema to track when documents are created/updated
 
 // Exporting the user model based on the schema
-module.exports = new mongoose.model("users", userSchema);
+module.exports = new mongoose.model("user", userSchema);
