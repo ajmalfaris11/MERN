@@ -6,7 +6,6 @@ const register = async (req, res) => {
   try {
     const { name, email, mobile, password } = req.body;
 
-    console.log(password);
 
     if (!name || !email || !mobile || !password) {
       return res.status(400).json({ error: "All fields are required" });
@@ -14,7 +13,7 @@ const register = async (req, res) => {
 
     const userAlreadyExist = await userModel.findOne({
       $or: [{ email }, { mobile }], // Check if either email or mobile exists
-    });
+    }).select("-password");
     if (userAlreadyExist) {
       return res.status(400).json({ message: "User already exists" });
     }
@@ -34,7 +33,7 @@ const register = async (req, res) => {
 
     return res.status(200).json({
       message: "User created successfully",
-      savedUser,
+      data:savedUser
     });
   } catch (error) {
     console.log("Register controller issue:", error.message);
@@ -55,7 +54,7 @@ const login = async (req, res) => {
     }
 
     // Check if user exists
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email }).select("-Password");
     if (!user) {
       return res.status(400).json({ message: "user not exists" });
     }
@@ -63,10 +62,10 @@ const login = async (req, res) => {
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Incorrect Password" });
     }
 
-    res.status(200).json({ message: "Login successful", user });
+    res.status(200).json({ message: "Login successful", data:user });
   } catch (error) {
     res.status(500).json({ err: error.message || "Internal Server Error" });
   }
