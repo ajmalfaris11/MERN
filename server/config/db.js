@@ -9,7 +9,7 @@ const connectDB = async () => {
 
     // If successful, log a success message
     console.log("DB connected successfully");
-  } catch (err) {
+  } catch (error) {
     // If an error occurs, log the error message
     console.log(error);
   }

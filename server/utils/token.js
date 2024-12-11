@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 // Function to generate a JWT token
 // Accepts user object and role as parameters
-const generaeteToken = (user, role) => {
+const generateToken = (user, role) => {
     try {
         // Generate a JWT token with user ID and role
         const token = jwt.sign(
@@ -21,4 +21,4 @@ const generaeteToken = (user, role) => {
 }
 
 // Export the token generation function for external use
-module.exports = generaeteToken;
+module.exports = generateToken;

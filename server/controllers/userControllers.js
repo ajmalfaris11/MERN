@@ -1,5 +1,6 @@
 const userModel = require("../model/userModel");
 const bcrypt = require("bcrypt");
+const generateToken = require("../utils/token");
 
 //  User Sign-Up
 const register = async (req, res) => {
@@ -65,7 +66,10 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Incorrect Password" });
     }
 
+    const token = generateToken(user, "user");
+    res.cookie("token", token);
     res.status(200).json({ message: "Login successful", data:user });
+
   } catch (error) {
     res.status(500).json({ err: error.message || "Internal Server Error" });
   }
