@@ -13,7 +13,7 @@ const register = async (req, res) => {
 
     const userAlreadyExist = await userModel.findOne({
       $or: [{ email }, { mobile }], // Check if either email or mobile exists
-    }).select("-password");
+    })
     if (userAlreadyExist) {
       return res.status(400).json({ message: "User already exists" });
     }
