@@ -89,4 +89,10 @@ const userProfile = async (req, res) => {
   }
 };
 
-module.exports = { register, login, userProfile };
+//  logout
+
+const userLogout = async (req, res) => {
+
+}
+
+module.exports = { register, login, userProfile, userLogout };
