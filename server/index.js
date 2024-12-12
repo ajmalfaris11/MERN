@@ -5,6 +5,9 @@ const express = require("express");
 const connectDB = require("./config/db");
 const apiRoutes = require("./routes");
 
+// Importing the cookie-parser to access the cookies
+const cookieParser = require('cookie-parser')
+
 // Importing dotenv and configuring it to load environment variables from the .env file
 require("dotenv").config();
 
@@ -20,6 +23,8 @@ require("dotenv").config();
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api", apiRoutes);
 
 // Starting the server on the specified port and handling errors
