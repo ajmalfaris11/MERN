@@ -90,7 +90,6 @@ const userProfile = async (req, res) => {
 };
 
 //  logout
-
 const userLogout = async (req, res) => {
   try {
 
